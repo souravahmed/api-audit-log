@@ -9,6 +9,6 @@ export const SiteRepository = {
     return await Site.updateOne(selectCriteria, { $set: updatedSite });
   },
   findById: async (id: String) => {
-    return await Site.findById(id);
+    return await Site.findById(id).populate("siteLogs");
   },
 };

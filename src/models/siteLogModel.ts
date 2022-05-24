@@ -3,6 +3,7 @@ import { ISite } from "./siteModel";
 
 export interface ISiteLog extends ISite {
   site: mongoose.Schema.Types.ObjectId;
+  isCreated: Boolean;
 }
 
 const siteLogSchema = new mongoose.Schema<ISiteLog>(
@@ -13,6 +14,10 @@ const siteLogSchema = new mongoose.Schema<ISiteLog>(
     latitude: Number,
     longitude: Number,
     site: { type: mongoose.Schema.Types.ObjectId, ref: "Site" },
+    isCreated: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

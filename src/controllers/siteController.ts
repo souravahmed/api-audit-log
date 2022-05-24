@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import Site from "../models/siteModel";
 import { SiteService } from "../services/siteService";
+import _ from "lodash";
 
 export const createSite = async (
   req: Request,
@@ -32,8 +33,14 @@ export const updateSite = async (
     const { siteId } = req.params;
     const site = await SiteService.findById(siteId);
     site?.set(req.body);
-    const updateSite = await SiteService.updateSite(site, { _id: siteId });
-    return res.status(200).send(updateSite);
+    await SiteService.updateSite(site, { _id: siteId });
+    const updatedSite = await SiteService.findById(siteId);
+    const createdSite = _.find(updatedSite?.siteLogs, (siteLog) => {
+      return siteLog.isCreated;
+    });
+    return res
+      .status(200)
+      .send({ ...updatedSite, createdUser: createdSite.name });
   } catch (error) {
     next(error);
   }

@@ -8,7 +8,7 @@ export interface ISite {
   description: String;
   latitude: Number;
   longitude: Number;
-  siteLogs: Array<mongoose.Schema.Types.ObjectId>;
+  siteLogs: Array<any>;
   createdAt: Date;
   updatedAt: Date;
 }
